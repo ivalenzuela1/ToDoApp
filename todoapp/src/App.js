@@ -1,5 +1,7 @@
 import './App.css';
 import React, { useState } from "react";
+import { AiOutlineDelete } from 'react-icons/ai';
+import { BsCheckLg } from 'react-icons/bs';
 
 function App() {
   const [isCompleteScreen, setIsCompleteScreen] = useState(false);
@@ -22,18 +24,25 @@ function App() {
           </div>
         </div>
 
-        <div className='btn-are'>
+        <div className='btn-area'>
           <button className={`secondaryBtn ${isCompleteScreen === false && 'active'}`} onClick={() => setIsCompleteScreen(false)}>Todo</button>
           <button className={`secondaryBtn ${isCompleteScreen === true && 'active'}`} onClick={() => setIsCompleteScreen(true)}>Completed</button>
         </div>
 
         <div className='todo-list'>
           <div className='todo-list-item'>
-            <h3>Task1</h3>
-            <p>description</p>
-          </div>
-        </div>
+            <div>
+              <h3>Task1</h3>
+              <p>description</p>
+            </div>
 
+            <div>
+              <AiOutlineDelete className='delete-icon' />
+              <BsCheckLg className='check-icon' />
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   );
