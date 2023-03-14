@@ -2,6 +2,8 @@ import './App.css';
 import React, { useState, useEffect } from "react";
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [isCompleteScreen, setIsCompleteScreen] = useState(false);
@@ -11,6 +13,20 @@ function App() {
   const [completeTodos, setCompleteTodos] = useState([]);
 
   const handleAddTodo = () => {
+    if(!newTitle){
+      toast.error("Please add a title to continue",{
+        toastId: 'title',
+    });
+      return;
+    }
+
+    if(!newDescription){
+      toast.warning("Please add a description to continue",{
+        toastId: 'description',
+    });
+      return;
+    }
+
     let newTodoItem = {
       title: newTitle,
       description: newDescription
@@ -61,6 +77,12 @@ function App() {
     handleDeleteTodo(index);
   }
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleAddTodo();
+    }
+  };
+
   useEffect(() => {
     let savedTodo = JSON.parse(localStorage.getItem('todolist'));
     if (savedTodo) {
@@ -75,17 +97,18 @@ function App() {
 
   return (
     <div className="App">
+      <ToastContainer position="bottom-center"/>
       <h1>My Todos</h1>
 
       <div className='todo-wrapper'>
         <div className='todo-input'>
           <div className='todo-input-item'>
             <label>Title</label>
-            <input type="text" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} placeholder="What's the task title?" />
+            <input type="text" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} onKeyDown={handleKeyDown} placeholder="What's the task title?" />
           </div>
           <div className='todo-input-item'>
             <label>Description</label>
-            <input type="text" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} placeholder="What's the task description?" />
+            <input type="text" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} onKeyDown={handleKeyDown} placeholder="What's the task description?" />
           </div>
           <div className='todo-input-item'>
             <button type="button" onClick={handleAddTodo} className="primaryBtn">Add</button>
