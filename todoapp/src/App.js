@@ -24,13 +24,19 @@ function App() {
   }
 
   const handleDeleteTodo = (index) => {
-    console.log("Index");
-    console.log(index);
     let reduceTodo = [...allTodos];
     reduceTodo.splice(index, 1);
     setTodos(reduceTodo);
 
     localStorage.setItem('todolist', JSON.stringify(reduceTodo));
+  }
+
+  const handleDeleteCompletedTodo = (index) => {
+    let reduceCompletedTodo = [...completeTodos];
+    reduceCompletedTodo.splice(index, 1);
+    setCompleteTodos(reduceCompletedTodo);
+
+    localStorage.setItem('completedTodos', JSON.stringify(reduceCompletedTodo));
   }
 
   const handleComplete = (index) => {
@@ -50,7 +56,7 @@ function App() {
     updatedCompleteArr.push(filteredItem);
     setCompleteTodos(updatedCompleteArr);
 
-    localStorage.setItem('completelist', JSON.stringify(updatedCompleteArr));
+    localStorage.setItem('completedTodos', JSON.stringify(updatedCompleteArr));
 
     handleDeleteTodo(index);
   }
@@ -61,7 +67,7 @@ function App() {
       setTodos(savedTodo);
     }
 
-    let savedCompleteTodo = JSON.parse(localStorage.getItem('completelist'));
+    let savedCompleteTodo = JSON.parse(localStorage.getItem('completedTodos'));
     if (savedCompleteTodo) {
       setCompleteTodos(savedCompleteTodo);
     }
@@ -119,7 +125,7 @@ function App() {
                 </div>
 
                 <div>
-                  <AiOutlineDelete className='delete-icon' onClick={() => handleDeleteTodo(index)} title="delete task" />
+                  <AiOutlineDelete className='delete-icon' onClick={() => handleDeleteCompletedTodo(index)} title="delete task" />
                 </div>
               </div>
             )
