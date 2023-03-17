@@ -1,6 +1,5 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './Login/Login';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
@@ -26,6 +25,10 @@ function App() {
       setCompleteTodos(savedCompleteTodo);
     }
   }, [])
+
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
 
   const handleAddTodo = () => {
     if(!newTitle){
