@@ -1,5 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Login from './Login/Login';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
 import { ToastContainer, toast } from 'react-toastify';
@@ -11,6 +13,19 @@ function App() {
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
   const [completeTodos, setCompleteTodos] = useState([]);
+  const [token, setToken] = useState();
+
+  useEffect(() => {
+    let savedTodo = JSON.parse(localStorage.getItem('todolist'));
+    if (savedTodo) {
+      setTodos(savedTodo);
+    }
+
+    let savedCompleteTodo = JSON.parse(localStorage.getItem('completedTodos'));
+    if (savedCompleteTodo) {
+      setCompleteTodos(savedCompleteTodo);
+    }
+  }, [])
 
   const handleAddTodo = () => {
     if(!newTitle){
@@ -83,17 +98,7 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    let savedTodo = JSON.parse(localStorage.getItem('todolist'));
-    if (savedTodo) {
-      setTodos(savedTodo);
-    }
 
-    let savedCompleteTodo = JSON.parse(localStorage.getItem('completedTodos'));
-    if (savedCompleteTodo) {
-      setCompleteTodos(savedCompleteTodo);
-    }
-  }, [])
 
   return (
     <div className="App">
