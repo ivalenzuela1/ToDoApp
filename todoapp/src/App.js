@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useState, useEffect } from "react";
 import Login from './Login/Login';
+import useToken from './useToken';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,7 +13,8 @@ function App() {
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
   const [completeTodos, setCompleteTodos] = useState([]);
-  const [token, setToken] = useState();
+  const {token, setToken} = useToken();
+  
 
   useEffect(() => {
     let savedTodo = JSON.parse(localStorage.getItem('todolist'));
@@ -25,7 +27,7 @@ function App() {
       setCompleteTodos(savedCompleteTodo);
     }
   }, [])
-
+ 
   if(!token) {
     return <Login setToken={setToken} />
   }
